@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.font-display { font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; }
+.font-chart { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+@keyframes dashmove { to { stroke-dashoffset: -24; } }
+.route-animated { stroke-dasharray: 8 8; animation: dashmove 1.6s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .route-animated { animation: none; } }
+
+.chart-grid {
+  background-image:
+    linear-gradient(to right, rgba(11,34,57,0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(11,34,57,0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
