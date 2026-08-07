@@ -7,9 +7,63 @@
 .font-display { font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; }
 .font-chart { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 
+/* Polish global */
+::selection { background: rgba(244, 83, 11, 0.18); }
+
+:focus-visible {
+  outline: 2px solid #F4530B;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+a, button { -webkit-tap-highlight-color: transparent; }
+
 @keyframes dashmove { to { stroke-dashoffset: -24; } }
 .route-animated { stroke-dasharray: 8 8; animation: dashmove 1.6s linear infinite; }
-@media (prefers-reduced-motion: reduce) { .route-animated { animation: none; } }
+
+/* Fond animé "carte marine vivante" (SeaBackground) — transform/opacity only */
+@keyframes swell-drift { to { transform: translateX(-50%); } }
+.swell { will-change: transform; }
+.swell-slow { animation: swell-drift 26s linear infinite; }
+.swell-fast { animation: swell-drift 17s linear infinite; }
+
+@keyframes radar-turn { to { transform: rotate(360deg); } }
+.radar-sweep {
+  background: conic-gradient(from 0deg, rgba(14, 116, 144, 0.09), rgba(14, 116, 144, 0.02) 70deg, transparent 110deg);
+  animation: radar-turn 14s linear infinite;
+  will-change: transform;
+}
+
+@keyframes sonar-ping {
+  0% { transform: scale(1); opacity: 0.9; }
+  70% { transform: scale(4.5); opacity: 0; }
+  100% { transform: scale(4.5); opacity: 0; }
+}
+.sonar-ring { animation: sonar-ping 4s ease-out infinite; }
+.sonar-ring-delayed { animation-delay: 2s; }
+
+/* Entrée du contenu hero — fondu + remontée douce */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.chart-grid h1 { animation: rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.chart-grid p { animation: rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .route-animated,
+  .swell-slow,
+  .swell-fast,
+  .radar-sweep,
+  .sonar-ring,
+  .chart-grid h1,
+  .chart-grid p {
+    animation: none;
+  }
+}
 
 .chart-grid {
   background-image:

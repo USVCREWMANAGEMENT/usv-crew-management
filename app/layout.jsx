@@ -6,6 +6,17 @@ export const metadata = {
   title: "USV Crew Management — Recrutement d'opérateurs USV",
   description:
     "L'agence spécialisée dans le placement d'opérateurs et de techniciens pour véhicules de surface sans équipage (USV).",
+  openGraph: {
+    title: "USV Crew Management — Recrutement d'opérateurs USV",
+    description:
+      "Placement d'équipage, référentiel de compétences et conseil pour les flottes de véhicules de surface sans équipage. Intervention dans le monde entier.",
+    locale: "fr_FR",
+    type: "website",
+  },
+};
+
+export const viewport = {
+  themeColor: "#0B2239",
 };
 
 export default function RootLayout({ children }) {

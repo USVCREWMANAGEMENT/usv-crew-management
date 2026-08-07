@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Mail, MapPin, Send } from "lucide-react";
+import SeaBackground from "../../components/SeaBackground";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -20,7 +21,8 @@ export default function ContactPage() {
 
   return (
     <main>
-      <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid">
+      <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid relative overflow-hidden">
+        <SeaBackground />
         <p className="text-xs uppercase tracking-widest text-[#F4530B] font-chart mb-4 font-semibold">
           Contact
         </p>
@@ -45,7 +47,7 @@ export default function ContactPage() {
               <MapPin className="w-4 h-4 text-[#F4530B] mt-1 shrink-0" strokeWidth={1.5} />
               <div>
                 <p className="text-sm font-medium text-[#0B2239]">Zone d&apos;intervention</p>
-                <p className="text-sm text-slate-500">France, bassin méditerranéen, Europe</p>
+                <p className="text-sm text-slate-500">Monde entier</p>
               </div>
             </div>
           </div>

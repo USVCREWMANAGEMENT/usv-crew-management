@@ -1,9 +1,11 @@
 import { Anchor, Compass, Shield } from "lucide-react";
+import SeaBackground from "../../components/SeaBackground";
 
 export default function AProposPage() {
   return (
     <main>
-      <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid">
+      <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid relative overflow-hidden">
+        <SeaBackground />
         <p className="text-xs uppercase tracking-widest text-[#F4530B] font-chart mb-4 font-semibold">
           À propos
         </p>

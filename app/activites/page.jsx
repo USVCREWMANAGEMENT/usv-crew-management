@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Anchor, Compass, Shield, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Anchor, Compass, ClipboardCheck, ArrowRight, CheckCircle2 } from "lucide-react";
 import VideoPlaceholder from "../../components/VideoPlaceholder";
+import SeaBackground from "../../components/SeaBackground";
 
 const ACTIVITES = [
   {
@@ -12,6 +13,7 @@ const ACTIVITES = [
       "Vérification des qualifications et présélection technique",
       "Défense, hydrographie, éolien offshore, surveillance côtière",
       "Mise à disposition (ETM) ou placement simple (SPRPGM) selon le poste",
+      "Équipage qualifié pour essais en mer (sea trials)",
     ],
   },
   {
@@ -26,14 +28,15 @@ const ACTIVITES = [
     ],
   },
   {
-    icon: Shield,
-    title: "Conseil & structuration RH",
+    icon: ClipboardCheck,
+    title: "Conseil, audit & process",
     description:
-      "Missions de conseil auprès d'opérateurs USV et d'organisations qui déploient ou envisagent de déployer des flottes autonomes : définition des fiches de poste, structuration des équipes, accompagnement réglementaire.",
+      "Missions de conseil et d'audit auprès d'opérateurs USV et d'organisations qui déploient ou envisagent de déployer des flottes autonomes : diagnostic opérationnel, définition des process d'exploitation, conformité réglementaire, accompagnement à la mise en œuvre.",
     points: [
-      "Audit RH avant montée en charge d'une flotte",
-      "Accompagnement sur le statut juridique des opérateurs",
-      "Structuration des équipes d'exploitation",
+      "Audit opérationnel avant montée en charge d'une flotte",
+      "Définition et formalisation des process d'exploitation",
+      "Veille et accompagnement réglementaire (cadre USV en évolution)",
+      "Accompagnement à la mise en œuvre et au déploiement",
     ],
   },
 ];
@@ -41,7 +44,8 @@ const ACTIVITES = [
 export default function ActivitesPage() {
   return (
     <main>
-      <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid">
+      <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid relative overflow-hidden">
+        <SeaBackground />
         <p className="text-xs uppercase tracking-widest text-[#F4530B] font-chart mb-4 font-semibold">
           Nos activités
         </p>

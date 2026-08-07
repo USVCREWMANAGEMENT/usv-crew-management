@@ -1,6 +1,6 @@
 export default function HeroChart() {
   const waypoints = [
-    { x: 60, y: 330, label: "WPT 01 · PROFIL" },
+    { x: 110, y: 330, label: "WPT 01 · PROFIL" },
     { x: 140, y: 240, label: "WPT 02 · QUALIFICATION" },
     { x: 230, y: 260, label: "WPT 03 · MISE EN RELATION" },
     { x: 320, y: 140, label: "WPT 04 · EMBARQUEMENT" },
@@ -17,12 +17,20 @@ export default function HeroChart() {
           <line x1="330" y1="42" x2="330" y2="118" />
           <line x1="292" y1="80" x2="368" y2="80" />
         </g>
-        <path d="M60,330 L140,240 L230,260 L320,140" fill="none" stroke="#F4530B" strokeWidth="2" className="route-animated" />
+        <path d="M110,330 L140,240 L230,260 L320,140" fill="none" stroke="#F4530B" strokeWidth="2" className="route-animated" />
         {waypoints.map((w, i) => (
           <g key={w.label}>
             <circle cx={w.x} cy={w.y} r="7" fill="#FAFBFC" stroke="#0B2239" strokeWidth="1.5" />
             <circle cx={w.x} cy={w.y} r="2.5" fill={i === 3 ? "#F4530B" : "#0B2239"} />
-            <text x={w.x + 12} y={w.y + (i === 2 ? 18 : -10)} fontFamily="'IBM Plex Mono', monospace" fontSize="9" fill="#0B2239" opacity="0.65">
+            <text
+              x={i === 2 ? w.x + 12 : w.x - 12}
+              y={w.y + (i === 2 ? 18 : -10)}
+              textAnchor={i === 2 ? "start" : "end"}
+              fontFamily="'IBM Plex Mono', monospace"
+              fontSize="9"
+              fill="#0B2239"
+              opacity="0.65"
+            >
               {w.label}
             </text>
           </g>

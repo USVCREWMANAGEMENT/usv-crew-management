@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Radio, Cpu, Radar, Shield, Compass, ArrowRight } from "lucide-react";
+import SeaBackground from "../../../components/SeaBackground";
 
 const NIVEAUX = [
   {
@@ -60,7 +61,8 @@ const COMPETENCES = [
 export default function ReferentielPage() {
   return (
     <main>
-      <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid">
+      <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid relative overflow-hidden">
+        <SeaBackground />
         <p className="text-xs uppercase tracking-widest text-[#F4530B] font-chart mb-4 font-semibold">
           Référentiel
         </p>

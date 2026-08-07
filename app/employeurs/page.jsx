@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Search, FileCheck, Users } from "lucide-react";
+import SeaBackground from "../../components/SeaBackground";
 
 const ETAPES = [
   {
@@ -22,7 +23,8 @@ const ETAPES = [
 export default function EmployeursPage() {
   return (
     <main>
-      <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid">
+      <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid relative overflow-hidden">
+        <SeaBackground />
         <p className="text-xs uppercase tracking-widest text-[#F4530B] font-chart mb-4 font-semibold">
           Pour les opérateurs de flotte USV
         </p>

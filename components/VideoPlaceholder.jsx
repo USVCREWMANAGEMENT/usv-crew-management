@@ -12,7 +12,7 @@ export default function VideoPlaceholder({ label, sublabel }) {
         <circle cx="340" cy="60" r="4" fill="#F4530B" />
       </svg>
       <div className="relative z-10 flex flex-col items-center gap-3">
-        <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center group-hover:bg-[#F4530B] group-hover:border-[#F4530B] transition-colors">
+        <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center group-hover:bg-[#F4530B] group-hover:border-[#F4530B] group-hover:scale-110 group-hover:shadow-[0_0_32px_rgba(244,83,11,0.4)] transition-all duration-300">
           <Play className="w-5 h-5 text-white ml-0.5" fill="currentColor" strokeWidth={0} />
         </div>
         <div className="text-center">
