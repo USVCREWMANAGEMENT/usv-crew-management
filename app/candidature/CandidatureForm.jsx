@@ -1,31 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { useLanguage } from "../../lib/i18n/LanguageProvider";
 import {
   Compass, Anchor, Ship, FileText, User, CheckCircle2,
   Plus, Trash2, Upload, ChevronRight, MapPin, Clock, Radio, Shield, Cpu, Radar
 } from "lucide-react";
 
-const STEPS = [
-  { key: "identite", label: "Identité", icon: User },
-  { key: "profil", label: "Profil", icon: Compass },
-  { key: "experience", label: "Expérience", icon: Anchor },
-  { key: "documents", label: "Documents", icon: FileText },
-  { key: "recap", label: "Validation", icon: CheckCircle2 },
-];
-
-const STCW_BREVETS = [
-  "Capitaine 500", "Capitaine 3000", "Chef mécanicien 750kW", "Chef mécanicien 3000kW",
-  "OQF Pont", "OQF Machine", "Matelot pont", "Matelot machine",
-];
-
-const COMPETENCES_USV = [
-  { key: "telepilotage", label: "Télépilotage / conduite à distance", icon: Radio },
-  { key: "maintenance", label: "Maintenance systèmes embarqués", icon: Cpu },
-  { key: "capteurs", label: "Fusion de capteurs / navigation", icon: Radar },
-  { key: "cyber", label: "Cybersécurité opérationnelle", icon: Shield },
-  { key: "mission", label: "Gestion de mission / supervision de flotte", icon: Compass },
-];
+const STEP_KEYS = ["identite", "profil", "experience", "documents", "recap"];
+const STEP_ICONS = [User, Compass, Anchor, FileText, CheckCircle2];
+const COMPETENCE_ICONS = [Radio, Cpu, Radar, Shield, Compass];
 
 const emptyExperience = () => ({
   id: crypto.randomUUID(),
@@ -49,6 +33,10 @@ function fileToBase64(file) {
 }
 
 export default function CandidatureForm() {
+  const { lang, t: dict } = useLanguage();
+  const t = dict.candidature;
+  const STEPS = STEP_KEYS.map((key, i) => ({ key, label: t.steps[key], icon: STEP_ICONS[i] }));
+  const COMPETENCES_USV = t.competences.map((c, i) => ({ ...c, icon: COMPETENCE_ICONS[i] }));
   const [stepIndex, setStepIndex] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -120,13 +108,25 @@ export default function CandidatureForm() {
           method: "POST",
           mode: "no-cors",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ ...data, cvBase64, certBase64 }),
+          body: JSON.stringify({
+            ...data,
+            // Les valeurs partent dans la langue du candidat, avec la langue
+            // elle-même pour savoir dans quelle version il a postulé.
+            langue: lang.toUpperCase(),
+            disponibilite:
+              t.dispoOptions.find((o) => o.value === data.disponibilite)?.label ?? data.disponibilite,
+            typeProfil:
+              t.typeOptions.find((o) => o.value === data.typeProfil)?.label ?? data.typeProfil,
+            competencesUSV: data.competencesUSV.map(
+              (k) => COMPETENCES_USV.find((c) => c.key === k)?.label ?? k
+            ),
+            cvBase64,
+            certBase64,
+          }),
         });
         setSubmitted(true);
       } catch (err) {
-        setSubmitError(
-          "L'envoi a rencontré un problème réseau. Vérifie ta connexion et réessaie."
-        );
+        setSubmitError(t.erreurReseau);
       } finally {
         setSubmitting(false);
       }
@@ -146,17 +146,15 @@ export default function CandidatureForm() {
           <div className="mx-auto w-16 h-16 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center">
             <Anchor className="w-7 h-7 text-emerald-600" strokeWidth={1.5} />
           </div>
-          <h1 className="font-semibold text-2xl tracking-tight">Profil mouillé au port.</h1>
+          <h1 className="font-semibold text-2xl tracking-tight">{t.succesTitle}</h1>
           <p className="text-slate-500 text-sm leading-relaxed">
-            Merci{data.prenom ? ` ${data.prenom}` : ""}, votre candidature nous est bien
-            parvenue. Nous étudions votre profil et revenons vers vous dès qu&apos;une
-            mission correspond à vos compétences.
+            {t.succesMerci}{data.prenom ? ` ${data.prenom}` : ""}, {t.succesText}
           </p>
           <Link
             href="/"
             className="inline-block text-xs uppercase tracking-widest text-[#F4530B] border border-[#F4530B]/40 px-4 py-2 rounded-lg hover:bg-[#F4530B]/5 transition-colors"
           >
-            Retour à l&apos;accueil
+            {t.succesRetour}
           </Link>
         </div>
       </div>
@@ -178,7 +176,7 @@ export default function CandidatureForm() {
           href="/"
           className="text-[10px] uppercase tracking-widest text-slate-400 hover:text-slate-700 transition-colors mb-8 block"
         >
-          ← Retour à l'accueil
+          {t.retour}
         </Link>
 
         <div className="relative pl-1">
@@ -222,44 +220,40 @@ export default function CandidatureForm() {
 
         <div className="mt-12 pt-6 border-t border-slate-200 hidden lg:block">
           <p className="text-[10px] font-chart uppercase tracking-widest text-slate-400 leading-relaxed">
-            Cap suivi<br />
-            <span className="text-slate-600">Étape {stepIndex + 1} / {STEPS.length}</span>
+            {t.capSuivi}<br />
+            <span className="text-slate-600">{t.etape} {stepIndex + 1} / {STEPS.length}</span>
           </p>
         </div>
       </aside>
 
       <main className="flex-1 px-6 py-10 lg:px-16 lg:py-14 max-w-3xl">
         {step.key === "identite" && (
-          <Section title="Qui êtes-vous ?" subtitle="Les informations pour vous recontacter.">
+          <Section title={t.identiteTitle} subtitle={t.identiteSub}>
             <Row>
-              <Field label="Prénom" required>
-                <Input value={data.prenom} onChange={(v) => update("prenom", v)} placeholder="Prénom" />
+              <Field label={t.prenom} required>
+                <Input value={data.prenom} onChange={(v) => update("prenom", v)} placeholder={t.prenomPh} />
               </Field>
-              <Field label="Nom" required>
-                <Input value={data.nom} onChange={(v) => update("nom", v)} placeholder="Nom de famille" />
+              <Field label={t.nom} required>
+                <Input value={data.nom} onChange={(v) => update("nom", v)} placeholder={t.nomPh} />
               </Field>
             </Row>
             <Row>
-              <Field label="Email" required>
-                <Input type="email" value={data.email} onChange={(v) => update("email", v)} placeholder="vous@exemple.com" />
+              <Field label={t.email} required>
+                <Input type="email" value={data.email} onChange={(v) => update("email", v)} placeholder={t.emailPh} />
               </Field>
-              <Field label="Téléphone">
-                <Input value={data.telephone} onChange={(v) => update("telephone", v)} placeholder="+33 6 12 34 56 78" />
+              <Field label={t.telephone}>
+                <Input value={data.telephone} onChange={(v) => update("telephone", v)} placeholder={t.telephonePh} />
               </Field>
             </Row>
             <Row>
-              <Field label="Localisation" icon={MapPin}>
-                <Input value={data.localisation} onChange={(v) => update("localisation", v)} placeholder="Marseille, France" />
+              <Field label={t.localisation} icon={MapPin}>
+                <Input value={data.localisation} onChange={(v) => update("localisation", v)} placeholder={t.localisationPh} />
               </Field>
-              <Field label="Disponibilité" icon={Clock}>
+              <Field label={t.disponibilite} icon={Clock}>
                 <Select
                   value={data.disponibilite}
                   onChange={(v) => update("disponibilite", v)}
-                  options={[
-                    { value: "immediate", label: "Immédiate" },
-                    { value: "preavis", label: "Sous préavis" },
-                    { value: "date", label: "À une date précise" },
-                  ]}
+                  options={t.dispoOptions}
                 />
               </Field>
             </Row>
@@ -267,14 +261,10 @@ export default function CandidatureForm() {
         )}
 
         {step.key === "profil" && (
-          <Section title="Votre profil" subtitle="Marin, opérateur robotique, ou les deux.">
-            <Field label="Type de profil" required>
+          <Section title={t.profilTitle} subtitle={t.profilSub}>
+            <Field label={t.typeProfil} required>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                {[
-                  { value: "stcw", label: "Marin STCW" },
-                  { value: "usv", label: "Opérateur USV" },
-                  { value: "les_deux", label: "Les deux" },
-                ].map((opt) => (
+                {t.typeOptions.map((opt) => (
                   <button
                     key={opt.value}
                     type="button"
@@ -290,9 +280,9 @@ export default function CandidatureForm() {
               </div>
             </Field>
 
-            <Field label="Brevets STCW détenus" hint="Cochez ceux que vous possédez">
+            <Field label={t.brevetsLabel} hint={t.brevetsHint}>
               <div className="flex flex-wrap gap-2">
-                {STCW_BREVETS.map((b) => (
+                {t.brevets.map((b) => (
                   <Chip
                     key={b}
                     label={b}
@@ -303,7 +293,7 @@ export default function CandidatureForm() {
               </div>
             </Field>
 
-            <Field label="Compétences USV" hint="Cochez vos domaines de maîtrise">
+            <Field label={t.competencesLabel} hint={t.competencesHint}>
               <div className="space-y-2">
                 {COMPETENCES_USV.map((c) => {
                   const Icon = c.icon;
@@ -327,46 +317,46 @@ export default function CandidatureForm() {
         )}
 
         {step.key === "experience" && (
-          <Section title="Votre expérience" subtitle="Postes occupés, du plus récent au plus ancien.">
+          <Section title={t.expTitle} subtitle={t.expSub}>
             <div className="space-y-6">
               {data.experiences.map((exp, idx) => (
                 <div key={exp.id} className="border border-slate-200 rounded-lg p-4 relative bg-slate-50/50">
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-[10px] font-chart uppercase tracking-widest text-slate-400">
-                      Poste {idx + 1}
+                      {t.poste} {idx + 1}
                     </span>
                     {data.experiences.length > 1 && (
                       <button
                         onClick={() => removeExperience(exp.id)}
                         className="text-slate-400 hover:text-red-500 transition-colors"
-                        aria-label="Supprimer ce poste"
+                        aria-label={t.supprimerPoste}
                       >
                         <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
                       </button>
                     )}
                   </div>
                   <Row>
-                    <Field label="Intitulé du poste">
-                      <Input value={exp.poste} onChange={(v) => updateExperience(exp.id, "poste", v)} placeholder="Opérateur télépilote" />
+                    <Field label={t.intitule}>
+                      <Input value={exp.poste} onChange={(v) => updateExperience(exp.id, "poste", v)} placeholder={t.intitulePh} />
                     </Field>
-                    <Field label="Employeur">
-                      <Input value={exp.employeur} onChange={(v) => updateExperience(exp.id, "employeur", v)} placeholder="Nom de l'entreprise" />
+                    <Field label={t.employeur}>
+                      <Input value={exp.employeur} onChange={(v) => updateExperience(exp.id, "employeur", v)} placeholder={t.employeurPh} />
                     </Field>
                   </Row>
                   <Row>
-                    <Field label="Début">
+                    <Field label={t.debut}>
                       <Input type="month" value={exp.debut} onChange={(v) => updateExperience(exp.id, "debut", v)} />
                     </Field>
-                    <Field label="Fin" hint="Laisser vide si en cours">
+                    <Field label={t.fin} hint={t.finHint}>
                       <Input type="month" value={exp.fin} onChange={(v) => updateExperience(exp.id, "fin", v)} />
                     </Field>
                   </Row>
-                  <Field label="Description">
+                  <Field label={t.description}>
                     <textarea
                       value={exp.description}
                       onChange={(e) => updateExperience(exp.id, "description", e.target.value)}
                       rows={3}
-                      placeholder="Missions, responsabilités, type de navire ou d'USV opéré..."
+                      placeholder={t.descriptionPh}
                       className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-[#0B2239] placeholder-slate-400 focus:outline-none focus:border-[#F4530B] focus:ring-1 focus:ring-[#F4530B] transition-colors resize-none"
                     />
                   </Field>
@@ -378,46 +368,50 @@ export default function CandidatureForm() {
               className="mt-4 flex items-center gap-2 text-xs uppercase tracking-widest text-[#F4530B] hover:text-[#F4530B] transition-colors"
             >
               <Plus className="w-3.5 h-3.5" strokeWidth={2} />
-              Ajouter un poste
+              {t.ajouterPoste}
             </button>
           </Section>
         )}
 
         {step.key === "documents" && (
-          <Section title="Documents" subtitle="CV obligatoire, certificats en option.">
-            <Field label="CV" required>
+          <Section title={t.docTitle} subtitle={t.docSub}>
+            <Field label={t.cv} required>
               <FileDrop
                 fileName={data.cvName}
                 onFile={(file) => { update("cvName", file?.name || ""); update("cvFile", file || null); }}
                 accept=".pdf,.doc,.docx"
+                cta={t.fileCta}
               />
             </Field>
-            <Field label="Certificats / brevets (optionnel)">
+            <Field label={t.certificats}>
               <FileDrop
                 fileName={data.certName}
                 onFile={(file) => { update("certName", file?.name || ""); update("certFile", file || null); }}
                 accept=".pdf,.jpg,.png"
+                cta={t.fileCta}
               />
             </Field>
           </Section>
         )}
 
         {step.key === "recap" && (
-          <Section title="Récapitulatif" subtitle="Vérifiez avant d'envoyer votre profil.">
+          <Section title={t.recapTitle} subtitle={t.recapSub}>
             <div className="space-y-5 font-chart text-sm">
-              <RecapRow label="Nom" value={`${data.prenom} ${data.nom}`.trim() || "—"} />
-              <RecapRow label="Contact" value={data.email || "—"} />
-              <RecapRow label="Profil" value={
-                data.typeProfil === "stcw" ? "Marin STCW" : data.typeProfil === "usv" ? "Opérateur USV" : "Marin STCW + Opérateur USV"
+              <RecapRow label={t.recapNom} value={`${data.prenom} ${data.nom}`.trim() || "—"} />
+              <RecapRow label={t.recapContact} value={data.email || "—"} />
+              <RecapRow label={t.recapProfil} value={
+                data.typeProfil === "les_deux"
+                  ? t.typeRecapLesDeux
+                  : t.typeOptions.find((o) => o.value === data.typeProfil)?.label ?? "—"
               } />
-              <RecapRow label="Brevets" value={data.brevets.length ? data.brevets.join(", ") : "Aucun renseigné"} />
-              <RecapRow label="Compétences USV" value={
+              <RecapRow label={t.recapBrevets} value={data.brevets.length ? data.brevets.join(", ") : t.aucunBrevet} />
+              <RecapRow label={t.recapCompetences} value={
                 data.competencesUSV.length
                   ? data.competencesUSV.map((k) => COMPETENCES_USV.find((c) => c.key === k)?.label).join(", ")
-                  : "Aucune renseignée"
+                  : t.aucuneCompetence
               } />
-              <RecapRow label="Expérience" value={`${data.experiences.filter((e) => e.poste).length} poste(s) renseigné(s)`} />
-              <RecapRow label="CV" value={data.cvName || "Non fourni"} />
+              <RecapRow label={t.recapExperience} value={`${data.experiences.filter((e) => e.poste).length} ${t.postesRenseignes}`} />
+              <RecapRow label={t.recapCv} value={data.cvName || t.nonFourni} />
             </div>
           </Section>
         )}
@@ -433,7 +427,7 @@ export default function CandidatureForm() {
               isFirst || submitting ? "text-slate-300 cursor-not-allowed" : "text-slate-500 hover:text-[#0B2239]"
             }`}
           >
-            Retour
+            {t.retourBtn}
           </button>
           <button
             onClick={handleNext}
@@ -443,7 +437,7 @@ export default function CandidatureForm() {
                 ? "bg-[#F4530B] text-white hover:bg-[#d94806]"
                 : "bg-slate-100 text-slate-400 cursor-not-allowed"}`}
           >
-            {submitting ? "Envoi en cours..." : isLast ? "Envoyer le profil" : "Continuer"}
+            {submitting ? t.envoiEnCours : isLast ? t.envoyer : t.continuer}
             <ChevronRight className="w-3.5 h-3.5" strokeWidth={2} />
           </button>
         </div>
@@ -520,7 +514,7 @@ function Chip({ label, active, onClick }) {
   );
 }
 
-function FileDrop({ fileName, onFile, accept }) {
+function FileDrop({ fileName, onFile, accept, cta }) {
   const inputId = React.useId();
   return (
     <label
@@ -529,7 +523,7 @@ function FileDrop({ fileName, onFile, accept }) {
     >
       <Upload className="w-4 h-4 text-slate-400 shrink-0" strokeWidth={1.5} />
       <span className="text-sm text-slate-500 truncate">
-        {fileName || "Cliquer pour choisir un fichier"}
+        {fileName || cta}
       </span>
       <input
         id={inputId}
