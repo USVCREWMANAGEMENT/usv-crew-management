@@ -1,37 +1,28 @@
+"use client";
 import Link from "next/link";
 import { ArrowRight, FileText } from "lucide-react";
 import SeaBackground from "../../components/SeaBackground";
-
-const ARTICLES = [
-  {
-    slug: "/ressources/referentiel-competences-usv",
-    title: "Le référentiel de compétences opérateur USV",
-    excerpt:
-      "À défaut de norme STCW dédiée, un cadre structuré des compétences et parcours de reconversion pour les métiers d'opérateur USV.",
-    tag: "Référentiel",
-  },
-];
+import { useT } from "../../lib/i18n/LanguageProvider";
 
 export default function RessourcesPage() {
+  const t = useT();
+
   return (
     <main>
       <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid relative overflow-hidden">
         <SeaBackground />
         <p className="text-xs uppercase tracking-widest text-[#F4530B] font-chart mb-4 font-semibold">
-          Ressources
+          {t.ressources.eyebrow}
         </p>
         <h1 className="font-display text-3xl lg:text-4xl font-semibold tracking-tight text-[#0B2239] mb-4 max-w-2xl">
-          Ce que nous publions pour structurer le métier.
+          {t.ressources.title}
         </h1>
-        <p className="text-slate-500 text-lg max-w-2xl">
-          Référentiels, actualités du secteur USV, guides pour candidats et
-          opérateurs de flotte.
-        </p>
+        <p className="text-slate-500 text-lg max-w-2xl">{t.ressources.intro}</p>
       </section>
 
       <section className="px-6 lg:px-16 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {ARTICLES.map((a) => (
+          {t.ressources.articles.map((a) => (
             <Link
               key={a.slug}
               href={a.slug}
@@ -46,17 +37,14 @@ export default function RessourcesPage() {
               <h2 className="font-semibold text-lg text-[#0B2239] mb-2">{a.title}</h2>
               <p className="text-slate-500 text-sm leading-relaxed mb-4">{a.excerpt}</p>
               <span className="flex items-center gap-1 text-xs uppercase tracking-widest text-[#F4530B]">
-                Lire
+                {t.ressources.lire}
                 <ArrowRight className="w-3 h-3" strokeWidth={2} />
               </span>
             </Link>
           ))}
 
           <div className="border border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center text-center">
-            <p className="text-sm text-slate-400">
-              D&apos;autres ressources et actualités du secteur USV seront
-              publiées ici.
-            </p>
+            <p className="text-sm text-slate-400">{t.ressources.aVenir}</p>
           </div>
         </div>
       </section>

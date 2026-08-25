@@ -3,19 +3,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Ship, Menu, X } from "lucide-react";
-
-const LINKS = [
-  { href: "/activites", label: "Activités" },
-  { href: "/employeurs", label: "Employeurs" },
-  { href: "/ressources", label: "Ressources" },
-  { href: "/a-propos", label: "À propos" },
-  { href: "/contact", label: "Contact" },
-];
+import { useT } from "../lib/i18n/LanguageProvider";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const t = useT();
   const isActive = (href) => pathname === href || pathname.startsWith(href + "/");
+
+  const links = [
+    { href: "/activites", label: t.nav.activites },
+    { href: "/employeurs", label: t.nav.employeurs },
+    { href: "/ressources", label: t.nav.ressources },
+    { href: "/a-propos", label: t.nav.aPropos },
+    { href: "/contact", label: t.nav.contact },
+  ];
+
   return (
     <header className="border-b border-[#0B2239]/10 sticky top-0 bg-[#FAFBFC]/85 backdrop-blur-md z-50">
       <div className="px-6 lg:px-16 py-4 flex items-center justify-between">
@@ -28,7 +32,7 @@ export default function Nav() {
           </span>
         </Link>
         <nav className="hidden lg:flex items-center gap-8">
-          {LINKS.map((l) => (
+          {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
@@ -44,20 +48,23 @@ export default function Nav() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
+          <div className="hidden sm:block">
+            <LanguageSwitcher />
+          </div>
           <Link
             href="/candidature"
             className="hidden sm:flex font-chart text-[11px] uppercase tracking-widest text-white bg-[#F4530B] px-4 py-2 rounded-md hover:bg-[#d94806] hover:shadow-[0_6px_16px_-6px_rgba(244,83,11,0.55)] active:scale-[0.97] transition-all"
           >
-            Déposer mon profil
+            {t.nav.deposer}
           </Link>
-          <button className="lg:hidden text-[#0B2239] p-2 -m-2" onClick={() => setOpen(!open)} aria-label="Menu" aria-expanded={open}>
+          <button className="lg:hidden text-[#0B2239] p-2 -m-2" onClick={() => setOpen(!open)} aria-label={t.nav.menu} aria-expanded={open}>
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
       {open && (
         <nav className="lg:hidden border-t border-[#0B2239]/10 px-6 py-4 flex flex-col gap-1 bg-[#FAFBFC]">
-          {LINKS.map((l) => (
+          {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
@@ -70,12 +77,15 @@ export default function Nav() {
               {l.label}
             </Link>
           ))}
+          <div className="px-3 pt-3 pb-1">
+            <LanguageSwitcher variant="mobile" onPick={() => setOpen(false)} />
+          </div>
           <Link
             href="/candidature"
             onClick={() => setOpen(false)}
             className="font-chart text-[11px] uppercase tracking-widest text-white bg-[#F4530B] px-4 py-3 rounded-md text-center mt-2 active:scale-[0.98] transition-transform"
           >
-            Déposer mon profil
+            {t.nav.deposer}
           </Link>
         </nav>
       )}

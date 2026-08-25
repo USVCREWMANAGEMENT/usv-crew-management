@@ -1,7 +1,10 @@
+"use client";
 import Link from "next/link";
 import { Ship } from "lucide-react";
+import { useT } from "../lib/i18n/LanguageProvider";
 
 export default function Footer() {
+  const t = useT();
   return (
     <footer className="relative overflow-hidden border-t border-[#0B2239]/10 px-6 lg:px-16 py-12 bg-[#0B2239] text-white">
       <svg
@@ -21,32 +24,30 @@ export default function Footer() {
             <span className="font-display font-semibold text-sm">USV CREW MANAGEMENT</span>
           </div>
           <p className="text-sm text-white/50 max-w-xs">
-            L&apos;agence spécialisée dans le placement de personnels qualifiés pour
-            navires de surface sans équipage : marins, opérateurs télépilotes,
-            techniciens et superviseurs de mission.
+            {t.footer.tagline}
           </p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 text-sm">
           <div>
-            <p className="font-chart text-[10px] uppercase tracking-widest text-white/40 mb-3">Agence</p>
+            <p className="font-chart text-[10px] uppercase tracking-widest text-white/40 mb-3">{t.footer.colAgence}</p>
             <ul className="space-y-2 text-white/70">
-              <li><Link href="/activites" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">Activités</Link></li>
-              <li><Link href="/a-propos" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">À propos</Link></li>
-              <li><Link href="/ressources" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">Ressources</Link></li>
+              <li><Link href="/activites" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">{t.nav.activites}</Link></li>
+              <li><Link href="/a-propos" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">{t.nav.aPropos}</Link></li>
+              <li><Link href="/ressources" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">{t.nav.ressources}</Link></li>
             </ul>
           </div>
           <div>
-            <p className="font-chart text-[10px] uppercase tracking-widest text-white/40 mb-3">Candidats</p>
+            <p className="font-chart text-[10px] uppercase tracking-widest text-white/40 mb-3">{t.footer.colCandidats}</p>
             <ul className="space-y-2 text-white/70">
-              <li><Link href="/candidature" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">Déposer mon profil</Link></li>
-              <li><Link href="/ressources/referentiel-competences-usv" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">Référentiel de compétences</Link></li>
+              <li><Link href="/candidature" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">{t.nav.deposer}</Link></li>
+              <li><Link href="/ressources/referentiel-competences-usv" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">{t.footer.referentiel}</Link></li>
             </ul>
           </div>
           <div>
-            <p className="font-chart text-[10px] uppercase tracking-widest text-white/40 mb-3">Employeurs</p>
+            <p className="font-chart text-[10px] uppercase tracking-widest text-white/40 mb-3">{t.footer.colEmployeurs}</p>
             <ul className="space-y-2 text-white/70">
-              <li><Link href="/employeurs" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">Recruter un opérateur</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">Contact</Link></li>
+              <li><Link href="/employeurs" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">{t.footer.recruter}</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors underline-offset-4 hover:underline decoration-[#F4530B]/60">{t.nav.contact}</Link></li>
             </ul>
           </div>
         </div>

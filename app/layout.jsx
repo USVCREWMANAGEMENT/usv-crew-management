@@ -1,6 +1,7 @@
 import "./globals.css";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import { LanguageProvider } from "../lib/i18n/LanguageProvider";
 
 export const metadata = {
   title: "USV Crew Management — Recrutement d'opérateurs USV",
@@ -23,9 +24,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body className="bg-white text-slate-900 font-sans antialiased">
-        <Nav />
-        {children}
-        <Footer />
+        <LanguageProvider>
+          <Nav />
+          {children}
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

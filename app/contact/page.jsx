@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { Mail, MapPin, Send } from "lucide-react";
 import SeaBackground from "../../components/SeaBackground";
+import { useT } from "../../lib/i18n/LanguageProvider";
 
 export default function ContactPage() {
+  const t = useT();
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ nom: "", email: "", entreprise: "", message: "" });
 
@@ -12,9 +14,9 @@ export default function ContactPage() {
     // À brancher sur le même circuit Google Apps Script que le formulaire de candidature,
     // ou sur une adresse mailto en attendant.
     window.location.href = `mailto:contact@usvcrewmanagement.com?subject=${encodeURIComponent(
-      "Contact depuis le site — " + form.nom
+      t.contact.mailSubject + form.nom
     )}&body=${encodeURIComponent(
-      `Entreprise : ${form.entreprise}\nEmail : ${form.email}\n\n${form.message}`
+      `${t.contact.mailEntreprise} : ${form.entreprise}\nEmail : ${form.email}\n\n${form.message}`
     )}`;
     setSent(true);
   };
@@ -24,10 +26,10 @@ export default function ContactPage() {
       <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid relative overflow-hidden">
         <SeaBackground />
         <p className="text-xs uppercase tracking-widest text-[#F4530B] font-chart mb-4 font-semibold">
-          Contact
+          {t.contact.eyebrow}
         </p>
         <h1 className="font-display text-3xl lg:text-4xl font-semibold tracking-tight text-[#0B2239] mb-4 max-w-2xl">
-          Parlons de votre besoin.
+          {t.contact.title}
         </h1>
       </section>
 
@@ -37,7 +39,7 @@ export default function ContactPage() {
             <div className="flex items-start gap-3 mb-6">
               <Mail className="w-4 h-4 text-[#F4530B] mt-1 shrink-0" strokeWidth={1.5} />
               <div>
-                <p className="text-sm font-medium text-[#0B2239]">Email</p>
+                <p className="text-sm font-medium text-[#0B2239]">{t.contact.emailLabel}</p>
                 <a href="mailto:contact@usvcrewmanagement.com" className="text-sm text-slate-500 hover:text-[#F4530B]">
                   contact@usvcrewmanagement.com
                 </a>
@@ -46,8 +48,8 @@ export default function ContactPage() {
             <div className="flex items-start gap-3">
               <MapPin className="w-4 h-4 text-[#F4530B] mt-1 shrink-0" strokeWidth={1.5} />
               <div>
-                <p className="text-sm font-medium text-[#0B2239]">Zone d&apos;intervention</p>
-                <p className="text-sm text-slate-500">Monde entier</p>
+                <p className="text-sm font-medium text-[#0B2239]">{t.contact.zoneLabel}</p>
+                <p className="text-sm text-slate-500">{t.contact.zoneValue}</p>
               </div>
             </div>
           </div>
@@ -55,12 +57,12 @@ export default function ContactPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {sent ? (
               <div className="border border-emerald-200 bg-emerald-50 rounded-lg p-4 text-sm text-emerald-700">
-                Ton client email va s&apos;ouvrir pour finaliser l&apos;envoi.
+                {t.contact.sentNotice}
               </div>
             ) : null}
             <div>
               <label className="text-[10px] uppercase tracking-widest font-chart text-slate-400 mb-1.5 block">
-                Nom
+                {t.contact.nom}
               </label>
               <input
                 required
@@ -71,7 +73,7 @@ export default function ContactPage() {
             </div>
             <div>
               <label className="text-[10px] uppercase tracking-widest font-chart text-slate-400 mb-1.5 block">
-                Email
+                {t.contact.email}
               </label>
               <input
                 required
@@ -83,7 +85,7 @@ export default function ContactPage() {
             </div>
             <div>
               <label className="text-[10px] uppercase tracking-widest font-chart text-slate-400 mb-1.5 block">
-                Entreprise (si vous recrutez)
+                {t.contact.entreprise}
               </label>
               <input
                 value={form.entreprise}
@@ -93,7 +95,7 @@ export default function ContactPage() {
             </div>
             <div>
               <label className="text-[10px] uppercase tracking-widest font-chart text-slate-400 mb-1.5 block">
-                Message
+                {t.contact.message}
               </label>
               <textarea
                 required
@@ -107,7 +109,7 @@ export default function ContactPage() {
               type="submit"
               className="flex items-center gap-2 text-sm uppercase tracking-widest bg-[#F4530B] text-white font-semibold px-6 py-3 rounded-lg hover:bg-[#d94806] transition-colors"
             >
-              Envoyer
+              {t.contact.envoyer}
               <Send className="w-4 h-4" strokeWidth={2} />
             </button>
           </form>
