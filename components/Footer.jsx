@@ -22,7 +22,7 @@ export default function Footer() {
           </div>
           <p className="text-sm text-white/50 max-w-xs">
             L&apos;agence spécialisée dans le placement de personnels qualifiés pour
-            véhicules de surface sans équipage : marins, opérateurs télépilotes,
+            navires de surface sans équipage : marins, opérateurs télépilotes,
             techniciens et superviseurs de mission.
           </p>
         </div>

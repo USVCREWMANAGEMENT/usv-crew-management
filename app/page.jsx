@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Radio, Cpu, Radar, Shield, Compass, ArrowRight, Anchor, ClipboardCheck, LifeBuoy, Wrench, CloudSun, Waves } from "lucide-react";
-import VideoPlaceholder from "../components/VideoPlaceholder";
 import ChartEyebrow from "../components/ChartEyebrow";
 import HeroChart from "../components/HeroChart";
 import SeaBackground from "../components/SeaBackground";
@@ -60,7 +59,7 @@ export default function Home() {
 
       <section className="px-6 lg:px-16 py-16">
         <div className="rounded-lg overflow-hidden aspect-[21/9] relative">
-          <img src="https://images.unsplash.com/photo-1541828985935-1fe979f9fc0b?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="Vue aérienne d'un véhicule de surface en mer" className="w-full h-full object-cover" />
+          <img src="https://images.unsplash.com/photo-1541828985935-1fe979f9fc0b?fm=jpg&q=80&w=2000&auto=format&fit=crop" alt="Vue aérienne d'un navire de surface en mer" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B2239]/50 to-transparent" />
           <p className="absolute bottom-4 left-5 font-chart text-[10px] uppercase tracking-widest text-white/70">
             Zone d&apos;opération · Monde entier
@@ -69,20 +68,17 @@ export default function Home() {
       </section>
 
       <section className="px-6 lg:px-16 py-16 border-t border-[#0B2239]/10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <div>
-            <ChartEyebrow fix="FIX 01">Comprendre le domaine</ChartEyebrow>
-            <h2 className="font-display text-2xl lg:text-3xl font-semibold mb-4">
-              Qu&apos;est-ce qu&apos;un véhicule de surface sans équipage ?
-            </h2>
-            <p className="text-[#0B2239]/60 leading-relaxed">
-              Un USV (Unmanned Surface Vessel) opère sans équipage à bord, piloté à distance
-              ou de façon autonome. Hydrographie, surveillance côtière, éolien offshore,
-              défense : les usages se multiplient, et avec eux le besoin de personnels
-              qualifiés pour les exploiter.
-            </p>
-          </div>
-          <VideoPlaceholder label="Présentation du domaine USV" sublabel="Emplacement vidéo" />
+        <div className="max-w-2xl">
+          <ChartEyebrow fix="FIX 01">Comprendre le domaine</ChartEyebrow>
+          <h2 className="font-display text-2xl lg:text-3xl font-semibold mb-4">
+            Qu&apos;est-ce qu&apos;un navire de surface sans équipage ?
+          </h2>
+          <p className="text-[#0B2239]/60 leading-relaxed">
+            Un USV (Unmanned Surface Vessel) opère sans équipage à bord, piloté à distance
+            ou de façon autonome. Hydrographie, surveillance côtière, éolien offshore,
+            défense : les usages se multiplient, et avec eux le besoin de personnels
+            qualifiés pour les exploiter.
+          </p>
         </div>
       </section>
 

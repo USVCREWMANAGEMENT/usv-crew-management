@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Anchor, Compass, ClipboardCheck, ArrowRight, CheckCircle2 } from "lucide-react";
-import VideoPlaceholder from "../../components/VideoPlaceholder";
 import SeaBackground from "../../components/SeaBackground";
 
 const ACTIVITES = [
@@ -97,24 +96,18 @@ export default function ActivitesPage() {
       </section>
 
       <section className="px-6 lg:px-16 py-16 border-t border-slate-100">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <VideoPlaceholder
-            label="Présentation de l'activité USV Crew Management"
-            sublabel="Emplacement vidéo — à intégrer"
-          />
-          <div>
-            <p className="text-xs uppercase tracking-widest text-slate-400 font-chart mb-4 font-semibold">
-              Comment ça marche
-            </p>
-            <h2 className="font-display text-2xl font-semibold mb-4 text-[#0B2239]">
-              Une seule agence, une expertise double.
-            </h2>
-            <p className="text-slate-500 leading-relaxed">
-              Capitaine 500, mécanicien 750kW et expérience en robotique navale
-              chez Exail Maritime — nous recrutons pour un métier que nous
-              connaissons de l&apos;intérieur, pas depuis un rapport de marché.
-            </p>
-          </div>
+        <div className="max-w-2xl">
+          <p className="text-xs uppercase tracking-widest text-slate-400 font-chart mb-4 font-semibold">
+            Comment ça marche
+          </p>
+          <h2 className="font-display text-2xl font-semibold mb-4 text-[#0B2239]">
+            Une seule agence, une expertise double.
+          </h2>
+          <p className="text-slate-500 leading-relaxed">
+            Une carrière maritime opérationnelle et une expérience en robotique
+            navale — nous recrutons pour un métier que nous connaissons de
+            l&apos;intérieur, pas depuis un rapport de marché.
+          </p>
         </div>
       </section>
 

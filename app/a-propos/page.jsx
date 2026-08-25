@@ -10,24 +10,23 @@ export default function AProposPage() {
           À propos
         </p>
         <h1 className="font-display text-3xl lg:text-4xl font-semibold tracking-tight text-[#0B2239] mb-4 max-w-2xl">
-          Un métier structuré par quelqu&apos;un qui le connaît de l&apos;intérieur.
+          Un métier structuré par ceux qui le connaissent de l&apos;intérieur.
         </h1>
       </section>
 
       <section className="px-6 lg:px-16 py-16 max-w-3xl">
         <p className="text-slate-600 text-lg leading-relaxed mb-6">
           USV Crew Management est né d&apos;un constat simple : le marché des
-          véhicules de surface sans équipage grandit vite, mais aucune agence
+          navires de surface sans équipage grandit vite, mais aucune agence
           n&apos;est dédiée au recrutement des personnes qui les font
           fonctionner. Les crewing agencies traditionnelles n&apos;ont pas de
           ligne USV. Les fabricants recrutent en direct, sans vivier structuré.
         </p>
         <p className="text-slate-600 text-lg leading-relaxed mb-6">
-          Cette agence est fondée sur une double expertise : une carrière
-          maritime opérationnelle (Capitaine 500, mécanicien 750kW) et une
-          expérience de fleet management dans la robotique navale chez Exail
-          Maritime. Ce n&apos;est pas un cabinet RH qui découvre le sujet — c&apos;est
-          un professionnel du secteur qui structure le métier.
+          Notre agence repose sur une double expertise : une carrière maritime
+          opérationnelle et une expérience de fleet management dans la robotique
+          navale. Nous ne sommes pas un cabinet RH qui découvre le sujet — nous
+          sommes des professionnels du secteur qui structurent le métier.
         </p>
       </section>
 
@@ -44,13 +43,13 @@ export default function AProposPage() {
             },
             {
               icon: Compass,
-              title: "Spécialiste, pas généraliste",
-              text: "100% dédié à l'USV — pas un service annexe chez une agence de crewing classique.",
+              title: "Une seule spécialité",
+              text: "L'USV est notre unique activité — c'est là que nous mettons tout notre temps.",
             },
             {
               icon: Shield,
-              title: "Premier arrivé, référence installée",
-              text: "Nous structurons le référentiel de compétences du métier avant que d'autres n'y pensent.",
+              title: "Un référentiel partagé",
+              text: "Nous construisons un référentiel de compétences pour un métier qui n'en a pas encore, et nous le mettons à disposition.",
             },
           ].map((item) => {
             const Icon = item.icon;

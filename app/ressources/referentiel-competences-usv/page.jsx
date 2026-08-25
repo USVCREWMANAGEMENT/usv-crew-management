@@ -16,12 +16,12 @@ const NIVEAUX = [
   {
     title: "Niveau 3 — Opérateur autonome",
     description:
-      "Conduite de mission en autonomie complète, gestion multi-véhicules, prise de décision en situation dégradée.",
+      "Conduite de mission en autonomie complète, gestion multi-navires, prise de décision en situation dégradée.",
   },
   {
     title: "Niveau 4 — Superviseur de flotte",
     description:
-      "Supervision de plusieurs opérateurs et véhicules simultanément, coordination des missions, gestion des priorités opérationnelles.",
+      "Supervision de plusieurs opérateurs et navires simultanément, coordination des missions, gestion des priorités opérationnelles.",
   },
 ];
 
@@ -54,7 +54,7 @@ const COMPETENCES = [
     icon: Compass,
     title: "Gestion de mission / supervision de flotte",
     description:
-      "Planification de mission, coordination multi-véhicules, gestion des priorités et des incidents.",
+      "Planification de mission, coordination multi-navires, gestion des priorités et des incidents.",
   },
 ];
 
@@ -72,7 +72,7 @@ export default function ReferentielPage() {
         <p className="text-slate-500 text-lg max-w-2xl">
           À défaut de norme STCW dédiée à ce jour, ce cadre structure les
           compétences et les parcours de reconversion pour les métiers
-          d&apos;opérateur de véhicule de surface sans équipage.
+          d&apos;opérateur de navire de surface sans équipage.
         </p>
       </section>
 
@@ -82,7 +82,7 @@ export default function ReferentielPage() {
           passerelles de formation pour les métiers d&apos;opérateur USV. Il
           s&apos;appuie sur les brevets maritimes STCW existants comme socle,
           en les complétant par les compétences spécifiques à l&apos;exploitation
-          de véhicules sans équipage.
+          de navires sans équipage.
         </p>
       </section>
 
