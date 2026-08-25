@@ -233,7 +233,7 @@ export default function CandidatureForm() {
           <Section title="Qui êtes-vous ?" subtitle="Les informations pour vous recontacter.">
             <Row>
               <Field label="Prénom" required>
-                <Input value={data.prenom} onChange={(v) => update("prenom", v)} placeholder="Adel" />
+                <Input value={data.prenom} onChange={(v) => update("prenom", v)} placeholder="Prénom" />
               </Field>
               <Field label="Nom" required>
                 <Input value={data.nom} onChange={(v) => update("nom", v)} placeholder="Nom de famille" />
