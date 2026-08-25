@@ -148,15 +148,16 @@ export default function CandidatureForm() {
           </div>
           <h1 className="font-semibold text-2xl tracking-tight">Profil mouillé au port.</h1>
           <p className="text-slate-500 text-sm leading-relaxed">
-            Le profil de {data.prenom} {data.nom} a été envoyé. Vérifie ta Google Sheet
-            pour confirmer sa bonne réception.
+            Merci{data.prenom ? ` ${data.prenom}` : ""}, votre candidature nous est bien
+            parvenue. Nous étudions votre profil et revenons vers vous dès qu&apos;une
+            mission correspond à vos compétences.
           </p>
-          <button
-            onClick={() => { setSubmitted(false); setStepIndex(0); }}
-            className="text-xs uppercase tracking-widest text-[#F4530B] border border-[#F4530B]/40 px-4 py-2 rounded-lg hover:bg-[#F4530B]/5 transition-colors"
+          <Link
+            href="/"
+            className="inline-block text-xs uppercase tracking-widest text-[#F4530B] border border-[#F4530B]/40 px-4 py-2 rounded-lg hover:bg-[#F4530B]/5 transition-colors"
           >
-            Créer un autre profil
-          </button>
+            Retour à l&apos;accueil
+          </Link>
         </div>
       </div>
     );
