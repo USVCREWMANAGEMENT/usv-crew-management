@@ -9,10 +9,12 @@ const STORAGE_KEY = "usv-lang";
 
 const LanguageContext = createContext({ lang: "fr", setLang: () => {}, t: fr });
 
-export function LanguageProvider({ children }) {
-  // Always start on "fr" so server and first client render agree; the stored
-  // preference is applied in the effect below to avoid a hydration mismatch.
-  const [lang, setLangState] = useState("fr");
+export function LanguageProvider({ children, defaultLang = "fr" }) {
+  // Start on the language the server picked from the request's domain
+  // (.com → en, .fr → fr) so server and first client render agree — no
+  // flash, no hydration mismatch. A stored preference (explicit user
+  // choice, from any domain) overrides it in the effect below.
+  const [lang, setLangState] = useState(defaultLang);
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
