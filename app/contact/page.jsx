@@ -1,120 +1,20 @@
-"use client";
-import { useState } from "react";
-import { Mail, MapPin, Send } from "lucide-react";
-import SeaBackground from "../../components/SeaBackground";
-import { useT } from "../../lib/i18n/LanguageProvider";
+import { pageMetadata } from "../../lib/seo";
+import ContactClient from "./ContactClient";
 
-export default function ContactPage() {
-  const t = useT();
-  const [sent, setSent] = useState(false);
-  const [form, setForm] = useState({ nom: "", email: "", entreprise: "", message: "" });
+export function generateMetadata() {
+  return pageMetadata("/contact", {
+    fr: {
+      title: "Contact | USV Crew Management",
+      description:
+        "Parlons de votre besoin de recrutement ou de votre candidature. Intervention dans le monde entier.",
+    },
+    en: {
+      title: "Contact | USV Crew Management",
+      description: "Let's talk about your hiring needs or your application. Worldwide reach.",
+    },
+  });
+}
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // À brancher sur le même circuit Google Apps Script que le formulaire de candidature,
-    // ou sur une adresse mailto en attendant.
-    window.location.href = `mailto:contact@usvcrewmanagement.com?subject=${encodeURIComponent(
-      t.contact.mailSubject + form.nom
-    )}&body=${encodeURIComponent(
-      `${t.contact.mailEntreprise} : ${form.entreprise}\nEmail : ${form.email}\n\n${form.message}`
-    )}`;
-    setSent(true);
-  };
-
-  return (
-    <main>
-      <section className="px-6 lg:px-16 py-16 lg:py-20 chart-grid relative overflow-hidden">
-        <SeaBackground />
-        <p className="text-xs uppercase tracking-widest text-[#F4530B] font-chart mb-4 font-semibold">
-          {t.contact.eyebrow}
-        </p>
-        <h1 className="font-display text-3xl lg:text-4xl font-semibold tracking-tight text-[#0B2239] mb-4 max-w-2xl">
-          {t.contact.title}
-        </h1>
-      </section>
-
-      <section className="px-6 lg:px-16 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div>
-            <div className="flex items-start gap-3 mb-6">
-              <Mail className="w-4 h-4 text-[#F4530B] mt-1 shrink-0" strokeWidth={1.5} />
-              <div>
-                <p className="text-sm font-medium text-[#0B2239]">{t.contact.emailLabel}</p>
-                <a href="mailto:contact@usvcrewmanagement.com" className="text-sm text-slate-500 hover:text-[#F4530B]">
-                  contact@usvcrewmanagement.com
-                </a>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <MapPin className="w-4 h-4 text-[#F4530B] mt-1 shrink-0" strokeWidth={1.5} />
-              <div>
-                <p className="text-sm font-medium text-[#0B2239]">{t.contact.zoneLabel}</p>
-                <p className="text-sm text-slate-500">{t.contact.zoneValue}</p>
-              </div>
-            </div>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {sent ? (
-              <div className="border border-emerald-200 bg-emerald-50 rounded-lg p-4 text-sm text-emerald-700">
-                {t.contact.sentNotice}
-              </div>
-            ) : null}
-            <div>
-              <label className="text-[10px] uppercase tracking-widest font-chart text-slate-400 mb-1.5 block">
-                {t.contact.nom}
-              </label>
-              <input
-                required
-                value={form.nom}
-                onChange={(e) => setForm({ ...form, nom: e.target.value })}
-                className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#F4530B] focus:ring-1 focus:ring-[#F4530B]"
-              />
-            </div>
-            <div>
-              <label className="text-[10px] uppercase tracking-widest font-chart text-slate-400 mb-1.5 block">
-                {t.contact.email}
-              </label>
-              <input
-                required
-                type="email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#F4530B] focus:ring-1 focus:ring-[#F4530B]"
-              />
-            </div>
-            <div>
-              <label className="text-[10px] uppercase tracking-widest font-chart text-slate-400 mb-1.5 block">
-                {t.contact.entreprise}
-              </label>
-              <input
-                value={form.entreprise}
-                onChange={(e) => setForm({ ...form, entreprise: e.target.value })}
-                className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#F4530B] focus:ring-1 focus:ring-[#F4530B]"
-              />
-            </div>
-            <div>
-              <label className="text-[10px] uppercase tracking-widest font-chart text-slate-400 mb-1.5 block">
-                {t.contact.message}
-              </label>
-              <textarea
-                required
-                rows={5}
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#F4530B] focus:ring-1 focus:ring-[#F4530B] resize-none"
-              />
-            </div>
-            <button
-              type="submit"
-              className="flex items-center gap-2 text-sm uppercase tracking-widest bg-[#F4530B] text-white font-semibold px-6 py-3 rounded-lg hover:bg-[#d94806] transition-colors"
-            >
-              {t.contact.envoyer}
-              <Send className="w-4 h-4" strokeWidth={2} />
-            </button>
-          </form>
-        </div>
-      </section>
-    </main>
-  );
+export default function Page() {
+  return <ContactClient />;
 }
